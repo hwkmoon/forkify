@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="src/img/favicon.png" type="image/x-icon" />
 
     <link rel="stylesheet" href="src/sass/main.scss" />
-    <script defer src="src/js/controller.js"></script>
+    <script type="module" defer src="src/js/controller.js"></script>
 
     <title>forkify // Search over 1,000,000 recipes</title>
   </head>
@@ -84,9 +84,9 @@
         </nav>
       </header>
 
-      <div class="search-results">
-        <ul class="results">
-          <!-- 
+      <div class="results">
+        <div class="search-results">
+<!--           
           <li class="preview">
             <a class="preview__link preview__link--active" href="#23456">
               <figure class="preview__fig">
@@ -104,7 +104,7 @@
             </a>
           </li>
            -->
-        </ul>
+          </div>
 
         <div class="pagination">
           <!-- <button class="btn--inline pagination__btn--prev">
