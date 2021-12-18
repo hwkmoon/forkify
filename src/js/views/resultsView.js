@@ -5,10 +5,11 @@ class ResultsView extends View  {
     _errorMessage = 'No recipes found for your query, pleasy try again';
     
     _generateMarkup() {
+      const id = window.location.hash.slice(1);
       const previews = this._data.map(recipe => {
         return `
         <li class="preview">
-          <a class="preview__link preview__link" href="#${recipe.id}">
+          <a class="preview__link ${id === recipe.id ? 'preview__link--active' : ''}" href="#${recipe.id}">
             <figure class="preview__fig">
               <img src="${recipe.image}" alt="Test" />
             </figure>
