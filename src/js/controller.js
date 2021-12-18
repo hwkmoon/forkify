@@ -44,6 +44,7 @@ const controlSearchResults = async function() {
     const query = searchView.getQuery();
     console.log(query);
     if (!query) return;
+    model.state.search.page = 1;
 
     // Load search results
     await model.loadSearchResults(query);
@@ -71,9 +72,15 @@ const controlServings = function(newServings) {
   recipeView.update(model.state.recipe);
 }
 
+const controlAddBookmark = function() {
+  model.addBookmark(model.state.recipe);
+  recipeView.update(model.state.recipe);
+}
+
 const init = function() {
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerRender(controlSearchResults);
   paginationView.addHandlerRender(controlPagination);
 };
