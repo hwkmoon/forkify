@@ -56,7 +56,9 @@ const controlSearchResults = async function() {
 }
 
 const controlPagination = function(changePage) {
-  model.state.search.page += changePage;
+  model.state.search.page = changePage;
+  resultsView.render(model.getSearchResultsPage(model.state.search.page));
+  paginationView.render(model.state.search);
 }
 
 const init = function() {
