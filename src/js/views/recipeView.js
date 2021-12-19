@@ -7,6 +7,7 @@ class RecipeView extends View {
   _errorMessage = 'We could not find that recipe, please try another one!';
 
   _generateMarkup() {
+    console.log(this._data);
     return `
         <figure class="recipe__fig">
           <img src="${this._data.image}" alt="Tomato" class="recipe__img" />
@@ -51,7 +52,7 @@ class RecipeView extends View {
           </div>
           <button class="btn--round btn--bookmark">
             <svg class="">
-              <use href="${icons}#icon-bookmark${this._data.recipe.bookmarked ? '-fill' : ''}"></use>
+              <use href="${icons}#icon-bookmark${this._data.bookmarked ? '-fill' : ''}"></use>
             </svg>
           </button>
         </div>

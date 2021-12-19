@@ -3,6 +3,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
+import bookmarksView from './views/bookmarksView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -25,11 +26,18 @@ const controlRecipes = async function() {
     resultsView.update(model.getSearchResultsPage());
     // 1. Loading recipe
     recipeView.renderSpinner();
-    await model.loadRecipe(id);
-    const { recipe } = model.state;
-
-    // 2. Rendering recipe
-    recipeView.render(model.state.recipe);
+    let index = -1;
+    if (model.state.bookmarks) {
+      index = model.state.bookmarks.findIndex(bookmark => bookmark.id === id);
+    }
+    if (index === -1) {
+      await model.loadRecipe(id);
+      const { recipe } = model.state;
+      recipeView.render(model.state.recipe);
+    }
+    else {
+      recipeView.render(model.state.bookmarks[index]);
+    }
 
   } catch (err) {
       console.log(err);
@@ -73,16 +81,31 @@ const controlServings = function(newServings) {
 }
 
 const controlAddBookmark = function() {
-  model.addBookmark(model.state.recipe);
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.deleteBookmark(model.state.recipe.id);
   recipeView.update(model.state.recipe);
+
+  // Render bookmarks
+  bookmarksView.render(model.state.bookmarks);
+}
+
+// const controlBookmarks = function() {
+//   bookmarksView.render(model.state.bookmarks);
+//   //console.log(model.state.bookmarks);
+// }
+
+const controlBookmarks = function() {
+  bookmarksView.render(model.state.bookmarks);
 }
 
 const init = function() {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerRender(controlSearchResults);
   paginationView.addHandlerRender(controlPagination);
+  //bookmarksView.addHandlerBookmarks(controlBookmarks);
 };
 
 init();

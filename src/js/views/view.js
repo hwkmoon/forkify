@@ -34,8 +34,6 @@ export default class View {
             Array.from(newEl.attributes).forEach(attr => curEl.setAttribute(attr.name, attr.value));
           }
         });
-
-        console.log(newElements);
       }
     
       _clear() {
